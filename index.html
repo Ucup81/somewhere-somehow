@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Somewhere, Somehow</title>
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="a little something for you"><meta property="og:title" content="Somewhere, Somehow"><meta property="og:description" content="a little something for you"><meta property="og:type" content="website">
+<meta name="theme-color" content="#F8F4EC" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#1d211a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 20v10' stroke='%238A9A7B' stroke-width='2' fill='none'/%3E%3Cpath d='M16 21C9 21 8 13 9 6l4 4 3-5 3 5 4-4c1 7 0 15-7 15z' fill='%23D9A3A4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head>
+<body class="locked">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFC9C7"/><stop offset=".55" stop-color="#DDA9AA"/><stop offset="1" stop-color="#CE9496"/></linearGradient>
+<linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D3999B"/><stop offset="1" stop-color="#B98085"/></linearGradient>
+<linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9DAD8E"/><stop offset="1" stop-color="#6E8061"/></linearGradient></defs></svg>
+
+<div id="gate" role="dialog" aria-label="Password">
+<div class="petals" id="gp"></div>
+<div class="cluster" id="gt"></div>
+<h1>a little something for you</h1>
+<p class="s">some things are easier to write than to say</p>
+<div class="fld"><input id="pw" type="password" inputmode="numeric" autocomplete="off" maxlength="24" placeholder="password" aria-label="Password" aria-describedby="err"></div>
+<button id="go" type="button">Open Letter</button>
+<p id="err" role="alert"></p>
+<noscript><p class="s">this letter needs JavaScript to open.</p></noscript>
+</div>
+
+<main hidden>
+<div id="pg"></div>
+<section class="hero" id="hero">
+<div class="petals" id="hp"></div><div class="frame"></div>
+<div class="cluster" id="cl"></div>
+<div class="ht">
+<p class="eb rv" style="--i:0">a personal letter</p>
+<h1 class="t rv" style="--i:1"><span>Somewhere,</span> <span>Somehow</span></h1>
+<hr class="hr rv" style="--i:2">
+<p class="sub rv" style="--i:3">a letter for someone i still remember</p>
+<a class="cue rv" style="--i:4" href="#letter">read the letter <i aria-hidden="true">↓</i></a>
+</div>
+</section>
+<section class="letter" id="letter">
+<div class="mg" aria-hidden="true">a personal letter</div>
+<article class="sheet" id="sheet"></article>
+</section>
+<section class="end" id="end">
+<p class="sig rv slow"></p>
+<svg class="dv rv" viewBox="0 0 160 20" fill="none" stroke="var(--sage)" stroke-width="1" aria-hidden="true"><path d="M0 10H62M98 10H160"/><path d="M80 10C74 2 66 2 64 10 70 16 76 16 80 10ZM80 10C86 2 94 2 96 10 90 16 84 16 80 10Z" fill="var(--sage)" fill-opacity=".25"/></svg>
+<div id="fin"></div><div class="ground"></div>
+<small class="rv">end of letter</small>
+</section>
+</main>
+<div id="mu" hidden><span id="np" aria-hidden="true">If Ever You're in My Arms Again</span><button id="music" type="button" aria-pressed="false" aria-label="Music">♪ music off</button></div>
+<audio id="song" preload="none" loop hidden aria-hidden="true"></audio>
+
+<script src="script.js"></script></body></html>
