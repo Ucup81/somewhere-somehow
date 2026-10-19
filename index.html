@@ -2,7 +2,7 @@
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Somewhere, Somehow</title>
-<meta name="robots" content="noindex,nofollow"><meta name="description" content="a little something for you"><meta property="og:title" content="Somewhere, Somehow"><meta property="og:description" content="a little something for you"><meta property="og:type" content="website">
+<meta name="robots" content="noindex,nofollow"><meta name="description" content="a little something for you"><meta property="og:title" content="Somewhere, Somehow"><meta property="og:description" content="a little something for you"><meta property="og:type" content="website"><meta property="og:url" content="https://ucup81.github.io/somewhere-somehow/"><meta property="og:image" content="https://ucup81.github.io/somewhere-somehow/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F8F4EC" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#1d211a" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 20v10' stroke='%238A9A7B' stroke-width='2' fill='none'/%3E%3Cpath d='M16 21C9 21 8 13 9 6l4 4 3-5 3 5 4-4c1 7 0 15-7 15z' fill='%23D9A3A4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +55,7 @@ main[hidden]{display:none}main{opacity:0;transition:opacity 1.8s ease}main.open{
 .shake{animation:shk .5s}@keyframes shk{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 #go{margin-top:1.6rem;min-height:48px;padding:0 2.5rem;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:99px;font:italic 500 1.25rem var(--serif);letter-spacing:.08em;cursor:pointer;transition:background .8s,color .8s,letter-spacing .8s,transform .2s}
 #go:hover{background:var(--ink);color:var(--bg);letter-spacing:.13em}#go:active{transform:scale(.97)}
-#err{min-height:1.8em;margin:1rem 0 0;font:italic 500 1.15rem var(--serif);color:var(--rt);opacity:0;transition:opacity 1s}#err.show{opacity:1}
+#err{min-height:4.2rem;margin:1rem 0 0;font:italic 500 1.15rem var(--serif);color:var(--rt);opacity:0;transition:opacity 1s}#err.show{opacity:1}#err .hint{display:block;margin-top:.45rem;font-size:1.05rem;color:var(--brown)}
 /* hero */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;padding:4.5rem 1.8rem 3.5rem;text-align:center;overflow:hidden;background:radial-gradient(60% 40% at 80% 6%,var(--glow),transparent 72%)}
 .frame{position:absolute;inset:max(12px,2.2vw);border:1px solid var(--line);pointer-events:none}.frame::after{content:"";position:absolute;inset:6px;border:1px solid var(--line);opacity:.5}
@@ -182,7 +182,9 @@ return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AE
 async function tryOpen(){if(opening)return;opening=true;if(SONG&&AUTOPLAY)prime();const lb=goB.textContent;goB.textContent='opening…';let D=null,ns=false;
 try{D=await dec(pw.value.trim())}catch(e){ns=!!(e&&e.message==='nosubtle')}
 goB.textContent=lb;if(D)return unlock(D);opening=false;unprime();
-err.textContent=ns?"this page has to be opened over https (for example from GitHub Pages).":"that isn't the one. check the numbers and try again.";err.classList.add('show');
+err.textContent=ns?"this page has to be opened over https (for example from GitHub Pages).":"that isn't the one. try again.";
+if(!ns){const hs=document.createElement('span');hs.className='hint';hs.textContent='the first time we met';err.append(hs)}
+err.classList.add('show');
 pw.classList.remove('shake');void pw.offsetWidth;pw.classList.add('shake');pw.select()}
 function unlock(D){opening=true;if(SONG&&AUTOPLAY)startMusic();const m=$('main');err.classList.remove('show');L=D.p;build();
 const sg=$('.sig');D.s.forEach((t,i)=>{if(i)sg.append(' ');const sp=document.createElement('span');sp.textContent=t;sg.append(sp)});m.hidden=false;scrollTo(0,0);
