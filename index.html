@@ -91,6 +91,11 @@ h1.t span{display:block}h1.t span+span{padding-left:.5em;color:var(--rt)}
 .sw{position:relative;flex:none;width:36px;height:20px;border:1px solid var(--line);border-radius:99px;transition:border-color .5s}
 .sw i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--brown);transition:transform .45s cubic-bezier(.3,.6,.2,1),background .45s}
 #music[aria-checked=true] .sw{border-color:var(--rt)}#music[aria-checked=true] .sw i{transform:translateX(16px);background:var(--rt)}
+main>section{position:relative;z-index:1}
+#ly{position:fixed;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;padding:0 8vw;pointer-events:none;text-align:center;opacity:0;transition:opacity 1.6s ease}
+#ly.show{opacity:1}
+#ly p{position:absolute;margin:0;max-width:86vw;font:400 clamp(2.4rem,9vw,5.5rem)/1.2 var(--script);color:var(--rt);opacity:0;transition:opacity 1.6s ease;text-wrap:balance}
+#ly p.on{opacity:.13}
 @media(min-width:900px){
 .hero{flex-direction:row-reverse;justify-content:center;gap:8vw;text-align:left;padding-left:9vw}.cluster{--w:min(34vw,440px)}.hr{margin-left:0}h1.t span+span{padding-left:1.1em}
 .letter{display:grid;grid-template-columns:1fr minmax(0,40rem) 1.2fr;padding-inline:4vw}
@@ -121,6 +126,7 @@ h1.t span{display:block}h1.t span+span{padding-left:.5em;color:var(--rt)}
 
 <main hidden>
 <div id="pg"></div>
+<div id="ly" aria-hidden="true"><p id="ly1"></p><p id="ly2"></p></div>
 <section class="hero" id="hero">
 <div class="petals" id="hp"></div><div class="frame"></div>
 <div class="cluster" id="cl"></div>
@@ -217,4 +223,18 @@ lab('load');
 if(!setSrc()){await new Promise(r=>addEventListener('load',r,{once:true}));if(!setSrc()){lab('err');return}}
 try{au.volume=FADE?0:1;await au.play();fade(VMAX,2200)}catch(e){lab(e&&e.name==='NotAllowedError'?'off':'err')}});
 if('mediaSession'in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:"If Ever You're in My Arms Again",album:'Somewhere, Somehow'});['play','pause'].forEach(a=>navigator.mediaSession.setActionHandler(a,()=>mb.click()))}catch(e){}}
+/* lyrics layer: reads lyrics.lrc (lines with [mm:ss.xx] times) or lyrics.txt (plain lines) from this folder. No file = nothing is shown. */
+(async()=>{const ly=$('#ly');if(!ly||!SONG)return;
+const el=[$('#ly1'),$('#ly2')];let lines=[],timed=false;
+const get=async n=>{try{const r=await fetch(n,{cache:'no-cache'});return r.ok?await r.text():''}catch(_){return ''}};
+let t=await get('lyrics.lrc');
+if(t){lines=t.split(/\r?\n/).map(l=>{const m=l.match(/^\[(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);return m?{t:+m[1]*60+ +m[2],s:m[3].trim()}:null}).filter(Boolean).sort((a,b)=>a.t-b.t);timed=lines.length>0}
+if(!lines.length){t=await get('lyrics.txt');lines=t.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(s=>({s}))}
+if(!lines.length)return;
+let inL=false,pl=false,cur=-1,k=0,iv=0;
+const show=i=>{if(i===cur)return;cur=i;const s=i>=0?lines[i].s:'';const n=el[k^=1],o=el[k^1];o.classList.remove('on');n.textContent=s;if(s)n.classList.add('on')};
+const sync=()=>{if(!timed)return;let i=-1;const c=au.currentTime;for(let j=0;j<lines.length&&lines[j].t<=c;j++)i=j;show(i)};
+const upd=()=>{const on=inL&&pl;ly.classList.toggle('show',on);clearInterval(iv);iv=0;if(!on)return;if(timed)sync();else{show(Math.max(cur,0));iv=setInterval(()=>show((cur+1)%lines.length),7000)}};
+au.addEventListener('timeupdate',sync);au.addEventListener('playing',()=>{pl=true;upd()});au.addEventListener('pause',()=>{pl=false;upd()});
+new IntersectionObserver(es=>{inL=es[0].isIntersecting;upd()},{threshold:.05}).observe($('#letter'))})();
 </script></body></html>
