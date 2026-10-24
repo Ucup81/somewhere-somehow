@@ -1,0 +1,1 @@
+window.MAILBOX_KEY="20227fda-5c5e-411a-90df-ed5de8574767";
